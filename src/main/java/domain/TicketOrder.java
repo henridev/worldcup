@@ -10,12 +10,7 @@ public class TicketOrder {
 	private String email;
 	@NotNull
 	private Integer ticket;
-	@ValidSoccerCode
-	@NumberFormat(pattern = "##")
-	private Integer soccerCode1 = 1;
-	@ValidSoccerCode
-	@NumberFormat(pattern = "##")
-	private Integer soccerCode2 = 1;
+	private SoccerCodes soccerCodes;
 
 	public String getEmail() {
 		return email;
@@ -23,10 +18,20 @@ public class TicketOrder {
 	public int getTickets() {
 		return ticket;
 	}
+	public SoccerCodes getSoccerCodes() {
+		return soccerCodes;
+	}
+
 	public int getSoccerCode1() {
-		return soccerCode1;
+		return soccerCodes.getSoccerCode1();
 	}
 	public int getSoccerCode2() {
-		return soccerCode2;
+		return soccerCodes.getSoccerCode2();
+	}
+	public int setSoccerCode1() {
+		return soccerCodes.getSoccerCode1();
+	}
+	public int setSoccerCode2() {
+		return soccerCodes.getSoccerCode2();
 	}
 }

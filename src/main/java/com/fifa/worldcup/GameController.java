@@ -6,13 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import validator.SoccerCodesValidation;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/game")
 public class GameController {
 	private TicketOrder ticketOrder;
+	private SoccerCodesValidation soccerCodesValidation;
+
+	@Autowired
+	public void setSoccerCodesValidation(SoccerCodesValidation soccerCodesValidation){
+		this.soccerCodesValidation = soccerCodesValidation;
+	}
 
 	@Autowired
 	public void setTicketOrder(TicketOrder ticketOrder) {
@@ -27,11 +35,14 @@ public class GameController {
 	@GetMapping("/{id}")
 	public String getGameById(@PathVariable String id, Model model) {
 		model.addAttribute("TicketOrder", ticketOrder);
+		model.addAttribute("today", new Date());
+
 		return "game-detail";
 	}
 
 	@PostMapping
 	public String onSubmit(@Valid @ModelAttribute TicketOrder ticketOrder, BindingResult result, Model model) {
+		soccerCodesValidation.validate(ticketOrder.getSoccerCodes(), result);
 //		BankCustomer currentCustomer =  bankCustomerLookup.getCustomer(bankCustomer.getId());
 //
 //		if (currentCustomer == null)
