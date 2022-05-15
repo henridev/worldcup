@@ -16,7 +16,7 @@
 <h3>Belgium vs Canada</h3>
 <h3>Tickets available: 23</h3>
 
-<form:form method="POST" action="buy" modelAttribute="registration">
+<form:form method="POST" action="buy" modelAttribute="TicketOrder">
 
     <p><label>email:</label>
         <form:input path="email" size = "20"/>&nbsp;

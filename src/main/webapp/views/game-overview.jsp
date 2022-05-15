@@ -7,6 +7,6 @@
         <title>Registration</title>
     </head>
     <body>
-        <h1>Hello ${registration.userName}</h1>
+        <h1>Stadium: ${stadium}</h1>
     </body>
 </html>
