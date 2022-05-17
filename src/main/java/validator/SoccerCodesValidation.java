@@ -18,17 +18,18 @@ public class SoccerCodesValidation implements Validator {
 			Integer code2 = numbers.getSoccerCode2();
 
 			if(code1 == null){
-				errors.rejectValue("code1", "", "code1 is empty");
+				errors.rejectValue("code1", "{validation.soccerCode.empty}", "code1 is empty");
 				return;
 			}
 
 			if(code2 == null){
-				errors.rejectValue("code2", "", "code2 is empty");
+				errors.rejectValue("code2", "{validation.soccerCode.empty}", "code2 is empty");
 				return;
 			}
 
 			if(code1 >= code2){
-				errors.rejectValue("code1", "", "n2 should be smaller than n1");
+      errors.rejectValue(
+          "code1", "{validation.soccerCode.imbalance}", "n2 should be smaller than n1");
 			}
 		}
 }

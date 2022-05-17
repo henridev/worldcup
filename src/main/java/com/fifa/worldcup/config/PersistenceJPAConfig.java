@@ -1,4 +1,4 @@
-package com.fifa.worldcup;
+package com.fifa.worldcup.config;
 
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public class Game {
 	private String id; //unieke sleutel
@@ -18,19 +18,15 @@ public class Game {
 	public String getId() {
 		return id;
 	}
-
 	public String[] getCountries() {
 		return countries;
 	}
-
 	public int getDay() {
 		return day;
 	}
-
 	public int getHour() {
 		return hour;
 	}
-
 	@Override
 	public String toString() {
 		return String.format("%s vs %s on %d-11", countries[0], countries[1], day);

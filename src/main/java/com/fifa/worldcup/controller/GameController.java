@@ -1,6 +1,7 @@
-package com.fifa.worldcup;
+package com.fifa.worldcup.controller;
 
-import domain.TicketOrder;
+import domain.TicketOrderForm;
+import domain.stadium.StadiumCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,10 @@ import javax.validation.Valid;
 import java.util.Date;
 
 @Controller
+@SessionAttributes("stadium")
 @RequestMapping("/game")
 public class GameController {
-	private TicketOrder ticketOrder;
+	private TicketOrderForm ticketOrderForm;
 	private SoccerCodesValidation soccerCodesValidation;
 
 	@Autowired
@@ -23,26 +25,30 @@ public class GameController {
 	}
 
 	@Autowired
-	public void setTicketOrder(TicketOrder ticketOrder) {
-		this.ticketOrder = ticketOrder;
+	public void setTicketOrder(TicketOrderForm ticketOrderForm) {
+		this.ticketOrderForm = ticketOrderForm;
 	}
 
-	@GetMapping("/{stadium}")
-	public String getGameOverview(@PathVariable String stadium) {
-		return "game-overview";
+	@GetMapping
+	public String getGameOverview(@ModelAttribute StadiumCommand stadiumCommand, Model model) {
+		model.addAttribute("stadium", stadiumCommand.getStadiumSelected());
+		return "game/game-overview";
 	}
 
 	@GetMapping("/{id}")
 	public String getGameById(@PathVariable String id, Model model) {
-		model.addAttribute("TicketOrder", ticketOrder);
+		// set default values
+		ticketOrderForm.setSoccerCode1(1);
+		ticketOrderForm.setSoccerCode2(25);
+		model.addAttribute("TicketOrder", ticketOrderForm);
 		model.addAttribute("today", new Date());
 
-		return "game-detail";
+		return "game/game-detail";
 	}
 
 	@PostMapping
-	public String onSubmit(@Valid @ModelAttribute TicketOrder ticketOrder, BindingResult result, Model model) {
-		soccerCodesValidation.validate(ticketOrder.getSoccerCodes(), result);
+	public String onSubmit(@Valid @ModelAttribute TicketOrderForm ticketOrderForm, BindingResult result, Model model) {
+		soccerCodesValidation.validate(ticketOrderForm.getSoccerCodes(), result);
 //		BankCustomer currentCustomer =  bankCustomerLookup.getCustomer(bankCustomer.getId());
 //
 //		if (currentCustomer == null)

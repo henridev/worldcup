@@ -1,4 +1,4 @@
-package com.fifa.worldcup;
+package com.fifa.worldcup.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

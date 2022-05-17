@@ -3,9 +3,9 @@ package domain;
 import validator.ValidSoccerCode;
 
 public class SoccerCodes {
-	@ValidSoccerCode
+	@ValidSoccerCode(message="{validation.soccerCode}")
 	Integer soccerCode1;
-	@ValidSoccerCode
+	@ValidSoccerCode(message="{validation.soccerCode}")
 	Integer soccerCode2;
 	public Integer getSoccerCode1() {
 		return soccerCode1;

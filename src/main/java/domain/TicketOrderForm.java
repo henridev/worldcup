@@ -1,14 +1,17 @@
 package domain;
 
 import org.springframework.format.annotation.NumberFormat;
-import validator.ValidSoccerCode;
+import validator.ValidEmail;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class TicketOrder {
-	@NotNull
+public class TicketOrderForm {
+	@NotEmpty
+	@ValidEmail
 	private String email;
 	@NotNull
+	@NumberFormat(pattern = "##")
 	private Integer ticket;
 	private SoccerCodes soccerCodes;
 
@@ -21,17 +24,16 @@ public class TicketOrder {
 	public SoccerCodes getSoccerCodes() {
 		return soccerCodes;
 	}
-
 	public int getSoccerCode1() {
 		return soccerCodes.getSoccerCode1();
 	}
 	public int getSoccerCode2() {
 		return soccerCodes.getSoccerCode2();
 	}
-	public int setSoccerCode1() {
-		return soccerCodes.getSoccerCode1();
+	public void setSoccerCode1(Integer code) {
+		soccerCodes.setSoccerCode1(code);
 	}
-	public int setSoccerCode2() {
-		return soccerCodes.getSoccerCode2();
+	public void setSoccerCode2(Integer code) {
+		soccerCodes.setSoccerCode2(code);
 	}
 }

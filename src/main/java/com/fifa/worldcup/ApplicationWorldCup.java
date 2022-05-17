@@ -1,8 +1,8 @@
 package com.fifa.worldcup;
 
-import domain.IStadiumService;
-import domain.StadiumService;
-import domain.TicketOrder;
+import service.IStadiumService;
+import service.StadiumServiceImpl;
+import domain.TicketOrderForm;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
@@ -16,10 +16,10 @@ import validator.SoccerCodesValidation;
 import java.util.Properties;
 
 @SpringBootApplication
-public class WorldCupApplication implements WebMvcConfigurer {
+public class ApplicationWorldCup implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WorldCupApplication.class, args);
+		SpringApplication.run(ApplicationWorldCup.class, args);
 	}
 
 	/*
@@ -70,7 +70,7 @@ public class WorldCupApplication implements WebMvcConfigurer {
 	 */
 	@Bean
 	public IStadiumService stadiumService() {
-		return new StadiumService();
+		return new StadiumServiceImpl();
 	}
 
 
@@ -78,7 +78,7 @@ public class WorldCupApplication implements WebMvcConfigurer {
 	 *	POJO'S
 	 */
 	@Bean
-	public TicketOrder ticketOrder() {
-		return new TicketOrder();
+	public TicketOrderForm ticketOrder() {
+		return new TicketOrderForm();
 	}
 }

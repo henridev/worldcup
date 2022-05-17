@@ -1,7 +1,9 @@
-package com.fifa.worldcup;
+package com.fifa.worldcup.controller;
 
-import domain.IStadiumService;
-import domain.StadiumCommand;
+import domain.stadium.Stadium;
+import domain.stadium.StadiumForm;
+import service.IStadiumService;
+import domain.stadium.StadiumCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +20,20 @@ public class StadiumController {
 	private IStadiumService stadiumService;
 
 	@Autowired
-	public void setStadiumBean(IStadiumService stadiumService) {
+	public void setStadiumService(IStadiumService stadiumService) {
 		this.stadiumService = stadiumService;
 	}
 
 	@ModelAttribute("stadiumList")
-	public List<String> populateStadiums() {
-		return stadiumService.getStadiumList();
+	public List<Stadium> populateStadiums() {
+		return stadiumService.findAll();
 	}
 
 	@GetMapping
 	public String showHomePage(Model model) {
+		StadiumForm stadiumForm = new StadiumForm();
+		stadiumForm.setStadiums(stadiumService.findAll());
+		model.addAttribute("stadiumForm", stadiumForm);
 		model.addAttribute("stadiumCommand", new StadiumCommand());
 		return "home-page";
 	}
@@ -37,6 +42,6 @@ public class StadiumController {
 	@PostMapping
 	public String onSubmit(@ModelAttribute StadiumCommand stadiumCommand, Model model) {
 		model.addAttribute("stadium", stadiumCommand.getStadiumSelected());
-		return "game-overview";
+		return "game/game-overview";
 	}
 }
