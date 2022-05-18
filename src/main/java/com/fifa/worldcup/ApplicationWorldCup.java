@@ -1,5 +1,6 @@
 package com.fifa.worldcup;
 
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import service.IStadiumService;
 import service.StadiumServiceImpl;
 import domain.TicketOrderForm;
@@ -80,5 +81,14 @@ public class ApplicationWorldCup implements WebMvcConfigurer {
 	@Bean
 	public TicketOrderForm ticketOrder() {
 		return new TicketOrderForm();
+	}
+
+
+	/*
+	 *	STATIC PAGES
+	 */
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/403").setViewName("403");
 	}
 }

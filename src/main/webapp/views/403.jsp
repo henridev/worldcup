@@ -1,16 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: belke
-  Date: 5/17/2022
-  Time: 5:02 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Access is denied</title>
+</head>
+<body>
+<h1>HTTP Status 403 - Access is denied</h1>
+<%@include file="./component/logout.jsp"%>
+</body>
 </html>

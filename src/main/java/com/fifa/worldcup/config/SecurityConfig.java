@@ -1,5 +1,6 @@
 package com.fifa.worldcup.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -8,23 +9,45 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	DataSource dataSource;
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	//DelegatingPasswordEncoder
+	@Autowired
+	public void setDataSource(DataSource dataSource) throws SQLException {
+		this.dataSource = dataSource;
+		ResultSet rs = this.dataSource.getConnection().createStatement().executeQuery("SELECT * FROM db.users");
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		while (rs.next()) {
+			for (int i = 1; i <= columnsNumber; i++) {
+				if (i > 1) System.out.print(",  ");
+				String columnValue = rs.getString(i);
+				System.out.print(columnValue + " " + rsmd.getColumnName(i));
+			}
+			System.out.println("");
+		}
+	}
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-				.withUser("user").password(passwordEncoder().encode("user")).roles("USER").and()
-				.withUser("admin").password(passwordEncoder().encode("admin")).roles("USER","ADMIN");
+		auth
+				.jdbcAuthentication()
+				.dataSource(dataSource)
+				.passwordEncoder(passwordEncoder());
 	}
 
 
@@ -35,11 +58,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.formLogin()
 			.defaultSuccessUrl("/", true);
-//			.loginPage("/login");
+
 		http
 			.authorizeRequests()
-			.antMatchers("/fifa").hasRole("USER");
-//			.and().csrf();
+			.antMatchers("/fifa").access("hasRole('ROLE_USER')")
+			.anyRequest().permitAll()
+			.and()
+			.formLogin().loginPage("/login")
+			.usernameParameter("username")
+			.passwordParameter("password")
+			.and()
+			.exceptionHandling().accessDeniedPage("/403")
+			.and()
+			.csrf();
 		//.hasAnyRole("ADMIN","USER");
 	}
 }
