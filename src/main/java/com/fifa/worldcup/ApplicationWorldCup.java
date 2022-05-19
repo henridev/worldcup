@@ -1,8 +1,11 @@
 package com.fifa.worldcup;
 
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import service.IStadiumService;
-import service.StadiumServiceImpl;
+import service.GameDaoImpl;
+import service.IGameDao;
+import service.IStadiumDao;
+import service.StadiumDaoImpl;
 import domain.TicketOrderForm;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,13 +15,12 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
-import validator.SoccerCodesValidation;
+import validator.TicketFormValidator;
 
 import java.util.Properties;
 
 @SpringBootApplication
 public class ApplicationWorldCup implements WebMvcConfigurer {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ApplicationWorldCup.class, args);
 	}
@@ -37,6 +39,16 @@ public class ApplicationWorldCup implements WebMvcConfigurer {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		return messageSource;
+	}
+
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+		CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+		loggingFilter.setIncludeClientInfo(true);
+		loggingFilter.setIncludeQueryString(true);
+		loggingFilter.setIncludePayload(true);
+		loggingFilter.setMaxPayloadLength(64000);
+		return loggingFilter;
 	}
 
 	/*
@@ -61,25 +73,32 @@ public class ApplicationWorldCup implements WebMvcConfigurer {
 	/*
 	 *	VALIDATIONS
 	 */
+
 	@Bean
-	public SoccerCodesValidation soccerCodesValidation() {
-		return new SoccerCodesValidation();
+	public TicketFormValidator ticketFormValidator() {
+		return new TicketFormValidator();
 	}
 
 	/*
 	 *	SERVICES
 	 */
+
 	@Bean
-	public IStadiumService stadiumService() {
-		return new StadiumServiceImpl();
+	public IStadiumDao stadiumDao() {
+		return new StadiumDaoImpl();
 	}
 
+	@Bean
+	public IGameDao gameDao() {
+		return new GameDaoImpl();
+	}
 
 	/*
 	 *	POJO'S
 	 */
+
 	@Bean
-	public TicketOrderForm ticketOrder() {
+	public TicketOrderForm ticketOrderForm() {
 		return new TicketOrderForm();
 	}
 
@@ -87,8 +106,9 @@ public class ApplicationWorldCup implements WebMvcConfigurer {
 	/*
 	 *	STATIC PAGES
 	 */
+
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/403").setViewName("403");
+		registry.addViewController("/403").setViewName("error/403");
 	}
 }

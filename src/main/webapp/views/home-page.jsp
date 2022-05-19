@@ -2,7 +2,11 @@
     pageEncoding="ISO-8859-1"%>
 <%@taglib prefix = "form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <spring:message code="home.stadium.select" var="labelSelect" />
+<spring:message code="home.stadium.sold" var="labelSold" />
+<spring:message code="home.stadium.soldOut" var="labelSoldOut" />
 <spring:message code="home.title" var="title" />
 <!DOCTYPE html>
 <html>
@@ -15,6 +19,13 @@
     </head>
     <body>
     <main class="container p-4">
+        <h3>${title}</h3>
+        <c:if test="${not empty sold}">
+            <p>${sold} ${labelSold}</p>
+        </c:if>
+        <c:if test="${soldOut == true}">
+            <p>${labelSoldOut}</p>
+        </c:if>
         <%@include file="./component/logout.jsp"%>
         <form:form
             method="POST"
@@ -33,6 +44,7 @@
                 <form:option value="NONE" label="--- Select ---"/>
                 <form:options items="${stadiumForm.stadiums}" itemValue="name" itemLabel="name"/>
             </form:select>
+            <%@include file="./component/csfr.jsp"%>
             <input class="p-2 w-100 btn btn-primary" type="submit" value="OK" />
         </form:form>
     </main>

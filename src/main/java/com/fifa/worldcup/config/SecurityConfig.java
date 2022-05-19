@@ -55,22 +55,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-		http
-			.formLogin()
-			.defaultSuccessUrl("/", true);
+
+		http.authorizeRequests()
+			.antMatchers("/403*").permitAll()
+			.antMatchers("/fifaDetail*").permitAll()
+			.antMatchers("/game").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/game/**").not().hasRole("USER")
+			.antMatchers("/*").hasAnyRole("ADMIN", "USER");
 
 		http
-			.authorizeRequests()
-			.antMatchers("/fifa").access("hasRole('ROLE_USER')")
-			.anyRequest().permitAll()
-			.and()
-			.formLogin().loginPage("/login")
+			.formLogin()
 			.usernameParameter("username")
 			.passwordParameter("password")
+			.defaultSuccessUrl("/fifa", true)
+			.loginPage("/login")
+			.permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/403")
 			.and()
 			.csrf();
-		//.hasAnyRole("ADMIN","USER");
-	}
+
+		http.logout().permitAll();
+	};
 }

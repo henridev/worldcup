@@ -17,15 +17,15 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<!--	VALIDATION	-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
 		<!--	TOMCAT	-->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+		<!--	VALIDATION	-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<!--	SERVLET	-->
 		<dependency>
