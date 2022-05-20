@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class PersistenceJPAConfig {
+    private static String databaseURL = "jdbc:mysql://localhost:3306/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static String databaseUserName = "user";
+    private static String databasePassword = "password";
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -35,9 +39,10 @@ public class PersistenceJPAConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        dataSource.setUrl("jdbc:mysql://localhost:3306/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-        dataSource.setUsername( "user" );
-        dataSource.setPassword( "password" );
+        dataSource.setUrl(databaseURL);
+        dataSource.setUsername(databaseUserName);
+        dataSource.setPassword(databasePassword);
+
         return dataSource;
     }
  

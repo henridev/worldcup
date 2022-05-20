@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.country.Country;
 import domain.stadium.Stadium;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -11,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
@@ -112,5 +112,18 @@ public class Game implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("%s vs %s on %s", getCountries().get(0), getCountries().get(1), date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Game game = (Game) o;
+		return Objects.equals(date, game.date) && Objects.equals(time, game.time);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(date, time);
 	}
 }

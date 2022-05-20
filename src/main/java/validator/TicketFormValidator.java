@@ -49,6 +49,7 @@ public class TicketFormValidator implements Validator {
 							"validation.tickets.min",
 							"soccerCode1 should be greater than or equal to 1");
 				  }
+
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
