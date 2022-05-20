@@ -18,7 +18,7 @@ public class Country implements Serializable {
 	@ManyToMany(mappedBy = "countries")
 	private List<Game> games;
 
-	protected Country() {}
+	public Country() {}
 
 	public Country(String name, String grouping, List<Game> games) {
 		this.name = name;

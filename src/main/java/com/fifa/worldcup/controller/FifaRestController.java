@@ -1,7 +1,6 @@
 package com.fifa.worldcup.controller;
 
 import domain.country.Country;
-import domain.game.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

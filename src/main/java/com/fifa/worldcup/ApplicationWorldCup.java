@@ -2,10 +2,7 @@ package com.fifa.worldcup;
 
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import service.GameDaoImpl;
-import service.IGameDao;
-import service.IStadiumDao;
-import service.StadiumDaoImpl;
+import service.*;
 import domain.TicketOrderForm;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,6 +36,14 @@ public class ApplicationWorldCup implements WebMvcConfigurer {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		return messageSource;
+	}
+
+	@Bean
+	public TicketService ticketService() {
+		TicketService ticketService = new TicketService();
+		ticketService.setMessageSource(messageSource());
+		ticketService.setGameDao(gameDao());
+		return ticketService;
 	}
 
 	@Bean

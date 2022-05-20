@@ -30,7 +30,7 @@ public class Stadium implements Serializable {
 	private String location;
 	private Integer capacity;
 
-	protected Stadium() {}
+	public Stadium() {}
 
 	public Stadium(String name) {
 		this.name = name;

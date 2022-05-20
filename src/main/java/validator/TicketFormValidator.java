@@ -21,31 +21,6 @@ public class TicketFormValidator implements Validator {
 				Integer tickets = ticketOrderForm.getTickets();
 
 
-				if(tickets == null){
-					errors.rejectValue(
-							"tickets",
-							"validation.tickets.empty",
-							"Tickets must be filled"
-					);
-				}
-
-
-				if(code1 == null){
-					errors.rejectValue(
-							"soccerCode1",
-							"validation.soccerCode.empty",
-							"soccerCode1 must be filled"
-					);
-				}
-
-				if(code2 == null){
-					errors.rejectValue(
-							"soccerCode2",
-							"validation.soccerCode.empty",
-							"soccerCode2 must be filled"
-					);
-				}
-
 				assert code1 != null && code2 != null;;
 
 				if(code1 > code2){

@@ -1,7 +1,6 @@
 package service;
 
 import domain.game.Game;
-import domain.stadium.Stadium;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
